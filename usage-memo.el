@@ -178,7 +178,7 @@
 ;;
 
 ;;; Code:
-(require 'cl)
+(require 'cl-lib)
 (require 'font-lock)
 (require 'view)
 (defvar umemo-base-directory "~/memo/umemo"
@@ -438,8 +438,9 @@ Of course, your annotation is revived even if Emacs is restarted!
   "Get common lisp full symbol name describing in BUF. Currently it supports SBCL, CMUCL and CLISP.
 
 If you want to adjust to other CL implementations, redefine this function."
-  (flet ((srch (re num) (and (re-search-forward re nil t) (match-string num)))
-         (srcheq (re num str) (equal (srch re num) str)))
+  (cl-letf ((symbol-function
+             '(srch (re num) (and (re-search-forward re nil t) (match-string num))))
+            (lambda (srcheq (re num str) (equal (srch re num) str))))
     (save-excursion
       (set-buffer buf)
       (goto-char (point-min))
