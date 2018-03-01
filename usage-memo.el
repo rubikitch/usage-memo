@@ -437,9 +437,11 @@ Of course, your annotation is revived even if Emacs is restarted!
   "Get common lisp full symbol name describing in BUF. Currently it supports SBCL, CMUCL and CLISP.
 
 If you want to adjust to other CL implementations, redefine this function."
-  (cl-letf ((symbol-function
-             '(srch (re num) (and (re-search-forward re nil t) (match-string num))))
-            (lambda (srcheq (re num str) (equal (srch re num) str))))
+  (cl-letf
+      (((symbol-function 'srch)
+        (lambda (re num) (and (re-search-forward re nil t) (match-string num))))
+       ((symbol-function 'srcheq)
+        (lambda (re num str) (equal (srch re num) str))))
     (with-current-buffer buf
       (goto-char (point-min))
       (apply
