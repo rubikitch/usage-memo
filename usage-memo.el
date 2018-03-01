@@ -273,7 +273,7 @@ variable. But it is probaby rare case.")
     (usage-memo-mode 1)
     (umemo-auto-change-major-mode-setup)
     (if (eq font-lock-mode t)
-        (font-lock-fontify-buffer))))
+        (font-lock-ensure))))
 (defun umemo-update-mode ()
   (when (and umemo-auto-change-major-mode-flag
              umemo-change-major-mode-flag)
