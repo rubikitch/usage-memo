@@ -274,7 +274,7 @@ variable. But it is probaby rare case.")
     (usage-memo-mode 1)
     (umemo-auto-change-major-mode-setup)
     (if (eq font-lock-mode t)
-        (font-lock-fontify-buffer)))) 
+        (font-lock-fontify-buffer))))
 (defun umemo-update-mode ()
   (when (and umemo-auto-change-major-mode-flag
              umemo-change-major-mode-flag)
@@ -328,7 +328,7 @@ NTH-ARG is passed to `ad-get-arg' macro.
 BUFFER-FMT is a `format' string, which %s is replaced with entry name,
 representing document display buffer.
 Optional NAME-CONVERTER-FUNCTION is 1-argument function
-to convert COMMAND's argument (indicated by NTH-ARG) to entry name. 
+to convert COMMAND's argument (indicated by NTH-ARG) to entry name.
 Of course, the default is `identity'.
 
 NAME-CONVERTER-FUNCTION can be used when the entry name is determined by document-displaying buffer contents.
@@ -373,7 +373,7 @@ See also `umemo-initialize' definition.
     `(defadvice ,command (around usage-memo activate)
        ad-do-it
        (let* ((buffer-fmt ,buffer-fmt)
-              (entry-name (funcall ',converter (format "%s" (ad-get-arg ,nth-arg))))
+              (entry-name (funcall #',converter (format "%s" (ad-get-arg ,nth-arg))))
               (buf (with-no-warnings (format ,buffer-fmt entry-name))))
          (umemo-setup ,category entry-name buf)))))
 
@@ -410,7 +410,7 @@ See also `umemo-initialize' definition.
 (define-key usage-memo-mode-map "q" 'umemo-electric-quit)
 ;; (loop for c from ?  to ?~ do
 ;;      (define-key usage-memo-mode-map (char-to-string c) 'self-insert-command))
-      
+
 (define-minor-mode usage-memo-mode
   "Automatically enabled minor mode to add usage-memo feature by `define-usage-memo'.
 
