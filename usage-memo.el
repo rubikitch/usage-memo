@@ -230,8 +230,7 @@ variable. But it is probaby rare case.")
 
 (defmacro umemo-with-append-to-buffer (buffer &rest body)
   "Execute BODY at the end of BUFFER."
-  `(save-excursion
-     (set-buffer buffer)
+  `(with-current-buffer buffer
      (goto-char (point-max))
      ,@body))
 
@@ -441,8 +440,7 @@ If you want to adjust to other CL implementations, redefine this function."
   (cl-letf ((symbol-function
              '(srch (re num) (and (re-search-forward re nil t) (match-string num))))
             (lambda (srcheq (re num str) (equal (srch re num) str))))
-    (save-excursion
-      (set-buffer buf)
+    (with-current-buffer buf
       (goto-char (point-min))
       (apply
        #'concat
